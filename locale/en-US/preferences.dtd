@@ -1,0 +1,27 @@
+<!-- Title -->
+<!ENTITY prefs.title "FireShare Preferences">
+
+<!-- Server Preferences -->
+<!ENTITY clientenabled "Enable FireShare URL Sharing">
+<!ENTITY autodetect "Auto detect client ip address for other peers to connect to.">
+<!ENTITY pane1.title "Coordination Server">
+<!ENTITY button.testserver "Test Connection">
+<!ENTITY label.report_ipaddress "IP Address to report to server:">
+<!ENTITY label.client_port "Local server should run on port:">
+<!ENTITY label.coordination_server "Coordination Server URL:">
+<!ENTITY label.testlist "Connection Test:">
+
+<!-- URL Sharing -->
+<!ENTITY pane2.title "URL Sharing">
+<!ENTITY page2.headerstyle "font-weight: bold;">
+<!ENTITY desc.multilinestyle "">
+<!ENTITY page2.topdesc "Choose the default behaviour for including URLs to share.  Each URL is matched against each filter below.  If a match is found, the rule is followed.  If no match is found against any of the filters, then the default according to the preference below is followed.">
+<!ENTITY label.urlfilters "URL Filters">
+<!ENTITY page2.regexdesc "Include one URL filter per line.  If a filter matches a URL, that URL will be shared.  '!' at the beginning of the filter disallows all urls that match the filter.  '*' matches a range of characters.  To disallow all example.com domains: '!*.example.com'.  To allow sites from test.com: '*.test.com'.  The 1st pattern that matches a URL is used.">
+<!ENTITY label.includeurls "Share URLs not affected by the filters below.">
+<!ENTITY label.excludeurls "Do not share URLs not affected by the filters below.">
+
+<!-- Test Data -->
+<!ENTITY pane3.title "Academic">
+<!ENTITY pane3.desc "In order to study and better the algorithm presented in this program, it is important to gather data about its performance.  To accomplish this, it is possible to send back a small amount of representative data each time your client performs an analysis of URLs.  This data includes the number of peers, a unique integer representing each known URL, and which, if any, URLs (again by integer) are being suggested to the user.  Submitting this data is voluntary.">
+<!ENTITY pane3.cbox "Yes, I'm willing to send anonymous data back for testing/analysis of this program.">

@@ -1,0 +1,16 @@
+
+statusbarpanel#p2pShareStatusBar[status="on"] {
+	list-style-image: url("chrome://fireshare/skin/fireicon_on.png");
+	x-moz-image-region: rect (0, 12, 12, 0);
+}
+
+statusbarpanel#p2pShareStatusBar[status="off"] {
+	list-style-image: url("chrome://fireshare/skin/fireicon_off.png");	
+	x-moz-image-region: rect(0, 25, 12, 13);
+}
+
+
+statusbarpanel#p2pShareStatusBar[status="blink"] {
+	list-style-image: url("chrome://fireshare/skin/fireicon_blink.png");	
+	x-moz-image-region: rect(0, 25, 12, 13);
+}

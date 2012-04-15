@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<RDF:RDF xmlns:em="http://www.mozilla.org/2004/em-rdf#"
+         xmlns:NC="http://home.netscape.com/NC-rdf#"
+         xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <RDF:Description RDF:about="urn:mozilla:install-manifest"
+                   em:id="{4790DC48-C0AA-44b2-BD69-A9193BD2E7BC}"
+                   em:name="FireShare"
+                   em:version="0.2.7"
+                   em:creator="Dennis Muhlestein"
+                   em:description="FireShare communicates with a coodination server and peers to find interesting URLs."
+                   em:homepageURL="http://fireshare.net/"
+                   em:updateURL="https://fireshare.net/upgrade.rdf"
+                   em:iconURL="chrome://fireshare/skin/fireicon_large.png"
+                   em:optionsURL="chrome://fireshare/content/preferences.xul"
+                   em:aboutURL="chrome://fireshare/content/about.xul"
+                   em:contributor="Scott Johnson">
+    <em:targetApplication RDF:resource="rdf:#$9dG3E1"/>
+  </RDF:Description>
+  <RDF:Description RDF:about="rdf:#$9dG3E1"
+                   em:id="{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
+                   em:minVersion="2.0"
+                   em:maxVersion="3.0.*" />
+</RDF:RDF>

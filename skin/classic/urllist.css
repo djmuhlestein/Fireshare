@@ -1,0 +1,4 @@
+
+listbox.urllist {
+	-moz-binding: url('chrome://fireshare/content/urllist.xbl#urllist');
+}

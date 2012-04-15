@@ -1,0 +1,5 @@
+content fireshare jar:chrome/fireshare.jar!/content/
+overlay chrome://browser/content/browser.xul chrome://fireshare/content/clientOverlay.xul
+
+skin fireshare classic/1.0 jar:chrome/fireshare.jar!/skin/classic/
+locale fireshare en-US jar:chrome/fireshare.jar!/locale/en-US/

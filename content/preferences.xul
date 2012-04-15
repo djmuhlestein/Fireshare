@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ***** BEGIN LICENSE BLOCK *****
+  -   Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  -
+  - The contents of this file are subject to the Mozilla Public License Version
+  - 1.1 (the "License"); you may not use this file except in compliance with
+  - the License. You may obtain a copy of the License at
+  - http://www.mozilla.org/MPL/
+  - 
+  - Software distributed under the License is distributed on an "AS IS" basis,
+  - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  - for the specific language governing rights and limitations under the
+  - License.
+  -
+  - The Original Code is FireShare.
+  -
+  - The Initial Developer of the Original Code is Dennis Muhlestein.
+  - Portions created by the Initial Developer are Copyright (C) 2007
+  - the Initial Developer. All Rights Reserved.
+  -
+  - Contributor(s):
+  -
+  - Alternatively, the contents of this file may be used under the terms of
+  - either the GNU General Public License Version 2 or later (the "GPL"), or
+  - the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  - in which case the provisions of the GPL or the LGPL are applicable instead
+  - of those above. If you wish to allow use of your version of this file only
+  - under the terms of either the GPL or the LGPL, and not to allow others to
+  - use your version of this file under the terms of the MPL, indicate your
+  - decision by deleting the provisions above and replace them with the notice
+  - and other provisions required by the GPL or the LGPL. If you do not delete
+  - the provisions above, a recipient may use your version of this file under
+  - the terms of any one of the MPL, the GPL or the LGPL.
+  - 
+  - ***** END LICENSE BLOCK ***** -->
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+
+<!DOCTYPE prefwindow SYSTEM "chrome://fireshare/locale/preferences.dtd">
+
+<prefwindow id="p2pSharePreferences"
+			title="&prefs.title;"
+            xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+			onload="sizeToContent();"
+xmlns:html="http://www.w3.org/1999/xhtml"
+			>
+			
+
+			
+  <prefpane id="pane1" label="&pane1.title;" onpaneload="ipAddrDisabler();setStrings();">
+  
+	<stringbundleset id="p2pPrefbundleset">
+		<stringbundle id="p2pPrefStrings" src="chrome://fireshare/locale/preferences.properties" />
+	</stringbundleset>
+    <script src="chrome://fireshare/content/preferences.js" type="application/x-javascript;version=1.7" >
+	</script>
+    <preferences> 
+     <preference id="client_enabled" name="extensions.p2pshare.enabled" type="bool" instantApply="true" />
+      <preference id="ipaddr_pref" name="extensions.p2pshare.ipaddress" type="string"/>
+	  <preference id="server_pref" name="extensions.p2pshare.share_server" type="string" />
+	  <preference id="auto_detect_ipaddr" name="extensions.p2pshare.auto_detect_ipaddr" type="bool" />
+	  <preference id="client_port" name="extensions.p2pshare.client_listen_port" type="int" />
+    </preferences> 
+	
+	<grid flex="1">
+  <columns>
+    <column />
+    <column flex="1"/>
+  </columns>
+
+  <rows>
+      <row /> <!-- need a blank row --> 
+	<hbox>
+        <checkbox id="enabled_cbox" preference="client_enabled" label="&clientenabled;" />
+       </hbox>
+       
+    <hbox>
+	<checkbox id="auto_detect_cbox" preference="auto_detect_ipaddr" label="&autodetect;"
+	 oncommand="ipAddrDisabler()" /> </hbox>
+     
+    <row align="center">
+      <label control="ipaddr_text" value="&label.report_ipaddress;" />
+      <textbox preference="ipaddr_pref" id="ipaddr_text" flex="1" /> 
+    </row>
+   
+	<row align="center"> 
+	  <label control="port_text" value="&label.client_port;" />
+	  <textbox preference="client_port" id="port_text" flex="1"/>
+	</row>
+    <row align="center">
+      <label control="server_text" value="&label.coordination_server;" />
+      <textbox preference="server_pref" id="server_text" flex="1"/> 
+    </row> 
+    <row align="center">
+        <label value="&label.testlist;" />
+        <hbox><button label="&button.testserver;" flex="1" 
+			oncommand="conTest();"/><spacer flex="3"/></hbox>
+    </row>
+  </rows>
+	</grid>
+<separator class="groove-thin" />			
+	<vbox id="test_list" maxwidth="400">
+<!-- 
+<hbox>
+ <image src="chrome://fireshare/skin/x.png" width="25" height="25" />
+ <description maxwidth="400"> Test connect to coordination server.  If this fails, check outbound firewall settings as well as coordination server address.</description>
+</hbox>
+ -->
+</vbox>
+  </prefpane>
+  
+  <prefpane id="pane2" label="&pane2.title;">
+	<preferences>
+		<preference id="filtered_urls" name="extensions.p2pshare.include_non_filtered_urls" type="bool" />
+		<preference id="url_filters" name="extensions.p2pshare.url_filters" type="string" />
+	</preferences>
+	
+	<vbox flex="1"> 
+                <label value="Default Filter Behaviour" flex="1" style="&page2.headerstyle;" />
+		<description  maxwidth="400" >&page2.topdesc;</description>
+                
+		<radiogroup preference="filtered_urls" >
+			<radio value="true" label="&label.includeurls;" />
+			<radio value="false" label="&label.excludeurls;" />
+		</radiogroup>
+
+		<label control="url_filters_text" value="&label.urlfilters;" flex="1"  style="&page2.headerstyle;"/>
+		
+		<description maxwidth="400" flex="1">
+			&page2.regexdesc; 
+		</description>
+               
+		<textbox preference="url_filters" id="url_filters_text"
+			multiline="true" rows="12" cols="40" flex="1"> 
+			
+		</textbox> 
+		<spacer />
+	</vbox>
+	
+  </prefpane>
+  <prefpane id="pane3" label="&pane3.title;">
+    <preferences>
+      <preference id="test_participate" name="extensions.p2pshare.test_participate" type="bool" />
+   </preferences>
+   
+   <vbox flex="1">
+     <spacer />
+    <description maxwidth="400" flex="1">
+      &pane3.desc; 
+    </description>
+     <spacer />
+     <checkbox id="test_data_cbox" preference="test_participate" label="&pane3.cbox;" flex="1"/>
+	  
+   </vbox>
+    <spacer style="height: 200px"/>
+  </prefpane>
+
+</prefwindow>
+

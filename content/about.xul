@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ***** BEGIN LICENSE BLOCK *****
+  -   Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  -
+  - The contents of this file are subject to the Mozilla Public License Version
+  - 1.1 (the "License"); you may not use this file except in compliance with
+  - the License. You may obtain a copy of the License at
+  - http://www.mozilla.org/MPL/
+  - 
+  - Software distributed under the License is distributed on an "AS IS" basis,
+  - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  - for the specific language governing rights and limitations under the
+  - License.
+  -
+  - The Original Code is FireShare.
+  -
+  - The Initial Developer of the Original Code is Dennis Muhlestein.
+  - Portions created by the Initial Developer are Copyright (C) 2007
+  - the Initial Developer. All Rights Reserved.
+  -
+  - Contributor(s):
+  -  Scott Johnson
+  -
+  - Alternatively, the contents of this file may be used under the terms of
+  - either the GNU General Public License Version 2 or later (the "GPL"), or
+  - the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  - in which case the provisions of the GPL or the LGPL are applicable instead
+  - of those above. If you wish to allow use of your version of this file only
+  - under the terms of either the GPL or the LGPL, and not to allow others to
+  - use your version of this file under the terms of the MPL, indicate your
+  - decision by deleting the provisions above and replace them with the notice
+  - and other provisions required by the GPL or the LGPL. If you do not delete
+  - the provisions above, a recipient may use your version of this file under
+  - the terms of any one of the MPL, the GPL or the LGPL.
+  - 
+  - ***** END LICENSE BLOCK ***** -->
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<!DOCTYPE window SYSTEM "chrome://fireshare/locale/about.dtd">
+
+<window class="dialog"
+	title="&text.title;"
+	orient="vertical"
+	autostretch="always"
+	onload="sizeToContent(); setVersion();"
+	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<stringbundleset id="p2pAboutBundleset">
+		<stringbundle id="p2pAboutStrings" src="chrome://fireshare/locale/about.properties" />
+	</stringbundleset>
+	
+<script type="application/x-javascript" src="chrome://fireshare/content/version.js"></script>
+<script type="application/x-javascript"> 
+	function setVersion() {
+		var aStrings = document.getElementById ( 'p2pAboutStrings' );
+		var v=document.createElement ( 'text' );
+		v.setAttribute ( 'value', aStrings.getFormattedString( 'version', [p2pExtVersion()]) );
+		document.getElementById ( 'version' ).appendChild ( v );
+	}
+</script>
+<groupbox align="center" orient="horizontal">
+<vbox>
+  <text value="&text.title;" style="font-weight: bold; font-size: x-large;"/>
+  <box id="version"></box>
+  <separator class="thin"/>
+  <text value="&text.createdby;" style="font-weight: bold;"/>
+  <text value="&text.author;" class="url"
+        onclick="window.open('http://fireshare.net/'); window.close();"/>
+  <separator class="thin"/>
+    <text value="&text.homepage;" style="font-weight: bold;"/>
+    <text value="http://fireshare.net/"
+          class="url"
+        onclick="window.opener.getBrowser().addTab('http://fireshare.net/'); window.close();"/>
+  <separator class="thin"/>
+  <text value="&text.privacy;" style="font-weight: bold;" />
+  <text value="http://fireshare.net/privacy" 
+     class="url"
+     onclick="window.opener.getBrowser().addTab('http://fireshare.net/privacy'); window.close();"/>
+  <separator class="thin" />
+</vbox>
+<spring flex="1"/>
+<image src="chrome://fireshare/skin/fireshare.png"/>
+</groupbox>
+
+  <hbox>
+  <spacer flex="1"/>
+   <button label="Close" oncommand="window.close();"/>
+  </hbox>
+
+</window>

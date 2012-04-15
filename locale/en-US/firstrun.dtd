@@ -1,0 +1,9 @@
+<!ENTITY welcome "Welcome to FireShare!">
+<!ENTITY congrats "Congratulations on installing FireShare.  If you don't already know, FireShare helps you find interesting stuff.  Everything happens in the background.  All you have to do is browse the internet like you normally do.  The URLs you visit are used to coordinate you with peers that visit similar URLs.  Peers then share visited URLs.  FireShare examines all this data and finds interesting patterns.">
+<!ENTITY important "Important">
+<!ENTITY todo "If you haven't already, make sure to set your FireShare preferences.  By default, FireShare will share all non-https, non-authenticated URLs.  You can add additional filters or change the default to only share allowed URLs on the preferences dialog.">
+<!ENTITY prefs "FireShare Preferences">
+<!ENTITY homepage "FireShare Home Page">
+<!ENTITY privacypage "FireShare Privacy Policy">
+<!ENTITY portforward "Help on port forwarding">
+<!ENTITY runtests "This page will continue to show until you have successfully run a connection test.  You must run the connection test on the preferences dialog for FireShare to function properly.  If you do not set up your network appropriately, other peers will not be able to connect to you and FireShare will not work properly.  If you have trouble with this step, PortForward.com has a lot of helpful information.">

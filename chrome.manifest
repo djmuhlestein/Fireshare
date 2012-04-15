@@ -1,0 +1,5 @@
+content fireshare content/
+overlay chrome://browser/content/browser.xul chrome://fireshare/content/clientOverlay.xul
+
+skin fireshare classic/1.0 skin/classic/
+locale fireshare en-US locale/en-US/

@@ -1,0 +1,244 @@
+<?xml version="1.0"?>
+<!-- ***** BEGIN LICENSE BLOCK *****
+  -   Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  -
+  - The contents of this file are subject to the Mozilla Public License Version
+  - 1.1 (the "License"); you may not use this file except in compliance with
+  - the License. You may obtain a copy of the License at
+  - http://www.mozilla.org/MPL/
+  - 
+  - Software distributed under the License is distributed on an "AS IS" basis,
+  - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  - for the specific language governing rights and limitations under the
+  - License.
+  -
+  - The Original Code is FireShare.
+  -
+  - The Initial Developer of the Original Code is Dennis Muhlestein.
+  - Portions created by the Initial Developer are Copyright (C) 2007
+  - the Initial Developer. All Rights Reserved.
+  -
+  - Contributor(s):
+  -
+  - Alternatively, the contents of this file may be used under the terms of
+  - either the GNU General Public License Version 2 or later (the "GPL"), or
+  - the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  - in which case the provisions of the GPL or the LGPL are applicable instead
+  - of those above. If you wish to allow use of your version of this file only
+  - under the terms of either the GPL or the LGPL, and not to allow others to
+  - use your version of this file under the terms of the MPL, indicate your
+  - decision by deleting the provisions above and replace them with the notice
+  - and other provisions required by the GPL or the LGPL. If you do not delete
+  - the provisions above, a recipient may use your version of this file under
+  - the terms of any one of the MPL, the GPL or the LGPL.
+  - 
+  - ***** END LICENSE BLOCK ***** -->
+  
+<!DOCTYPE overlay SYSTEM "chrome://fireshare/locale/overlay.dtd">
+<?xml-stylesheet href="chrome://fireshare/skin/overlay.css" type="text/css"?>
+
+<overlay id="clientOverlay"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+// This imports our javascript.
+
+<script type="application/x-javascript" src="chrome://fireshare/content/version.js"></script>
+<script type="application/x-javascript;version=1.7" src="chrome://fireshare/content/clientOverlay.js"></script>
+<script type="application/x-javascript;version=1.7" src="chrome://fireshare/content/sharemap.js"></script>
+<script type="application/x-javascript;version=1.7" src="chrome://fireshare/content/apriori.js"></script>
+<script type="application/x-javascript;version=1.7" src="chrome://fireshare/content/proglistener.js"></script>
+
+<script type="application/x-javascript">
+	
+	//window.addEventListener ( "load", clientInit, true );
+	//window.addEventListener ( "unload", clientUnload, true );
+	
+	
+	var overlayStrings;
+	
+	
+	window.addEventListener( "load", function(e) {	
+		overlayStrings = document.getElementById ( 'overlay-strings' );
+		
+		p2pShareClient.init();
+		
+		toggleStatusText(p2pShareClient.p2pOnline);
+		var a=document.getElementById('appcontent');
+		if (a) {
+			//a.addEventListener ( 'DOMContentLoaded', p2pPageLoad, true );
+			//a.addEventListener ( 'load', p2pPageLoad, true );
+			gBrowser.addProgressListener ( p2pLoadListener,
+				Components.interfaces.nsIWebProgress.NOTIFY_STATE_DOCUMENT);
+				//Components.interfaces.nsIWebProgress.NOTIFY_ALL|
+				//Components.interfaces.nsIWebProgress.NOTIFY_STATE_ALL
+				//); 
+					
+			/*var observerService = Components.classes["@mozilla.org/observer-service;1"]
+				.getService(Components.interfaces.nsIObserverService);
+			observerService.addObserver(p2pLoadListener,"http-on-examine-response",false); */
+			window.addEventListener ( "unload" , function(e) {
+				gBrowser.removeProgressListener ( p2pLoadListener );
+			}, false ); 
+		
+			
+			/*
+				When The tab listeners are present, the progress listener
+				receives state notifications for documents loaded in background
+				tabs (desired).  When not present, no notifications are sent to other 
+				tabs until the tab is focused.  This is an accidental HACK but 
+				I haven't found how to make it work correctly otherwise.
+			*/
+			var container=gBrowser.tabContainer;
+			container.addEventListener ( "TabOpen", p2pTabAdd, false );
+			//container.addEventListener ( "TabClose", p2pTabClose, false ); 
+		}
+	},false );
+	
+	 function p2pTabAdd(e) {
+		//p2pShareClient.p2plog ( "New Tab" );
+		e.target.linkedBrowser.addProgressListener ( p2pLoadListener,
+			Components.interfaces.nsIWebProgress.NOTIFY_STATE_DOCUMENT );
+	}
+	/* function p2pTabClose(e) {
+		//p2pShareClient.p2plog ( "Tab Closed" );
+		e.target.linkedBrowser.removeProgressListener ( p2pLoadListener );
+	} */
+	
+	function p2pPageLoad(e) {
+		if (!content.document) return;
+		if (!p2pShareClient.p2pOnline) return;
+		p2pShareClient.onPageLoad(content.document.URL);		
+	}
+	
+	
+	function showShared() {
+		window.openDialog (
+			"chrome://fireshare/content/urls.xul",
+			"p2pUrlDlg",
+			"centerscreen",
+			p2pShareClient
+		);
+	}
+	
+	function showPeers() {
+		window.openDialog (
+			"chrome://fireshare/content/peers.xul",
+			"p2pPeerDlg",
+			"centerscreen",
+			p2pShareClient
+		);
+	}
+	
+	function sbpclick(event) {
+		if (event.button==0 &amp;&amp; event.target.id=='p2pShareStatusBar') 
+			showRules();
+	}
+	
+	function showRules() {
+		if (p2pShareClient.statusBlink) {
+			clearInterval(p2pShareClient.statusBlink);
+			p2pShareClient.statusBlink=null;
+			document.getElementById('p2pShareStatusBar').setAttribute('status',
+				p2pShareClient.p2pOnline ? 'on' : 'off' );
+		}
+		window.openDialog (
+			"chrome://fireshare/content/foundurls.xul",
+			"p2pRules",
+			"centerscreen",
+			p2pShareClient
+		);
+	}
+	
+	function showPrefs() {
+		openDialog (
+			"chrome://fireshare/content/preferences.xul",
+			"p2pPrefs",
+			"chrome,toolbar,centerscreen"
+		);
+	}
+	
+	function showAbout() {
+		window.openDialog (
+			"chrome://fireshare/content/about.xul",
+			"p2pAbout",
+			""
+		);
+	}
+	
+	p2pShareClient.watch ( 'p2pOnline', function ( id, oldVal, newVal ) {
+		
+		toggleStatusText(newVal);
+				
+		return newVal;
+	});
+	
+	function toggleStatusText(enabled) {
+		var menustatus=document.getElementById ( 'p2pStatusMenuItem' );
+		var statusText = document.getElementById ( 'p2pShareStatusText' );
+		menustatus.label = overlayStrings.getString ( enabled ? 'server.disable' : 'server.enable' );
+		statusText.value = overlayStrings.getFormattedString (
+			'tooltip.title', [overlayStrings.getString( enabled ? 'status.online' : 'status.offline')]
+			);
+		document.getElementById('p2pShareStatusBar').setAttribute ( 'status',
+			enabled ? 'on' : 'off' );
+		
+	}
+		
+	
+	function toggleStatus() {
+		switch (p2pShareClient.p2pOnline) {
+			case true:
+				p2pShareClient.shutdown();				
+				break;
+			case false:
+				p2pShareClient.createServer();
+				break;
+		}
+		p2pShareClient.prefs.setBoolPref ( 'enabled' , p2pShareClient.p2pOnline );
+	}
+	
+	
+	
+</script>
+
+
+<stringbundleset id="stringbundleset">
+<stringbundle id="overlay-strings" src="chrome://fireshare/locale/overlay.properties" />
+</stringbundleset>
+
+	<!-- Test Only -->
+	<!--
+	<menupopup id="menu_ToolsPopup">
+		<menuitem id="p2pTestFunc" label="p2p - Test" 
+              oncommand="p2pShareClient.doTest();"/>
+	</menupopup>
+	-->
+
+ <!-- Firefox -->
+<statusbar id="status-bar">
+   <statusbarpanel id="p2pShareStatusBar"
+     label=""
+     context="p2pstatusmenu"  
+	 class="statusbarpanel-menu-iconic"
+	 onclick="sbpclick(event);"
+   >
+   <popupset id="p2pPopupSet">
+	<popup id="p2pstatusmenu">
+	<menuitem label="&label.viewurls;" oncommand="showRules();" />
+	<menuitem label="&label.viewshared;" oncommand="showShared();"/>
+	 <menuitem label="&label.peerdata;" oncommand="showPeers();" />
+	 <menuseparator />
+	 <menuitem id="p2pStatusMenuItem" label="dynamic" 
+		oncommand="toggleStatus();"/>
+	 <menuitem label="&label.preferences;" oncommand="showPrefs();" />
+	 <menuitem label="&label.about;" oncommand="showAbout();" />
+	</popup>
+	</popupset>	
+    <label value="p2pShare" tooltiptext="&label.statusbartip;" id="p2pShareStatusText"  flex="1"/>
+   </statusbarpanel>
+   
+</statusbar>
+
+
+</overlay>
+

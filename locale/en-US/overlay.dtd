@@ -1,0 +1,8 @@
+<!ENTITY label.statusbartip "FireShare">
+
+<!-- Menu Labels -->
+<!ENTITY label.viewshared "Shared URLs">
+<!ENTITY label.peerdata "Peer Data">
+<!ENTITY label.viewurls "Interesting URLs">
+<!ENTITY label.preferences "Preferences">
+<!ENTITY label.about "About FireShare">
